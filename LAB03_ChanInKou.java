@@ -4,11 +4,11 @@ public class LAB03_ChanInKou {
 
 	public static void main(String[] args) 
 	{
-//		int[] array = {0, 13, -25, 20, -3, -16, -23, 18, 20, 22,-7, 12, -5, -22, 15, -4, 7};
-		int[] array = {1, 3, 2, 10, -2};
+		int[] array = {0, 13, -25, 20, -3, -16, -23, 18, 20,-7, 12, -5, -22, 15, -4, 7};
+
 		bruteFroceFindMax(array);
-		
-		System.out.println(findMaxSubarray(array, 0, array.length-1, 0));
+		int[] answer = findMaxSubarray(array, 0, array.length-1, 0);
+		System.out.println("With divide and conquer, the maximum subarray is index " +answer[0] + " to index " + answer[1] + " with the sum of " + answer[2]);
 	}
 	
 	public static void bruteFroceFindMax(int[] array){
@@ -24,49 +24,58 @@ public class LAB03_ChanInKou {
 				tempSum = tempSum + array[sell];
 				if (tempSum > sum){
 					sum = tempSum;
-					lowestArray = array[buy];
-					maxArray = array[sell];
+					lowestArray = buy;
+					maxArray = sell;
 				}
 			}
 		}
-		System.out.println("With brute force, the Maximum subarray is " + lowestArray + " to " + maxArray + " and the sum is " + sum);
+		System.out.println("With brute force, the Maximum subarray is index " + lowestArray + " to index " + maxArray + " and the sum is " + sum);
 	}
 	
-	public static int findMaxSubarray(int[] array, int low, int high,int sum) {
+	public static int[] findMaxSubarray(int[] array, int low, int high,int sum) {
 		if(high == low){
-			return array[low];
+			int[] temp = {low, high, array[low]};
+			return temp;
 		}
 		else{
 			int mid = (low+high)/2;
-			int leftSum = findMaxSubarray(array, low, mid, sum);
-			int rightSum = findMaxSubarray(array, mid+1, high, sum);
-			int crossSum = MaxCross(array, low,mid, high, sum);
-			if(leftSum >= rightSum & leftSum>= crossSum){
+			int[] leftSum =  findMaxSubarray(array, low, mid, sum);
+			int[] rightSum = findMaxSubarray(array, mid+1, high, sum);
+			int[] crossSum = MaxCross(array, low, mid, high);
+			if(leftSum[2] >= rightSum[2] & leftSum[2]>= crossSum[2]){
+				sum = leftSum[2];
+			
 				return leftSum;
 			}
-			else if(rightSum >= leftSum & rightSum>= crossSum){
+			else if(rightSum[2] >= leftSum[2] & rightSum[2]>= crossSum[2]){
+				sum = rightSum[2];
+				
 				return rightSum;
 			}
-			else{
+			else
+			{
+				sum = crossSum[2];
 				return crossSum;
 			}	
 		}
 	}
 	
-	public static int MaxCross(int[] array, int low, int mid, int high, int totalsum){
-		int leftSum = 0;
+	
+	public static int[] MaxCross(int[] array, int low, int mid, int high){
+		int leftSum = array[mid];
 		int sum = 0;
-		int maxLeft;
-		int maxRight;
-		for(int i = mid; i < mid; i++){
+		int maxLeft = mid;
+		int maxRight = mid+1;
+		for(int i = mid; i < mid; i--){
 			sum = sum + array[i];
 			if(sum >leftSum){
 				leftSum = sum;
 				maxLeft = i;
 			}
 		}
-		int rightSum = 0;
 		int sum1 = 0;
+		int rightSum = array[mid+1];
+		
 		for(int j = mid+1; j < high; j++){
 			sum1 = sum1 + array[j];
 			if(sum1 > rightSum){
@@ -74,8 +83,10 @@ public class LAB03_ChanInKou {
 				maxRight = j;
 			}
 		}
-		totalsum = leftSum + rightSum;
-		return totalsum;
+		
+		int totalsum = leftSum + rightSum;
+		int[] result = {maxLeft,maxRight, totalsum}; 
+		return result;
 	}
 	
 	class MaxSubarray{
