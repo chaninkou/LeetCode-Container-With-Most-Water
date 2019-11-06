@@ -17,6 +17,7 @@ public class FindContainerWithMostWaterFunction {
 //  }
          
  // O(n) solution, using two pointers from left and right
+ // O(n) because no matter what, we are decreasing i and j which is total of n
  public int maxArea(int[] height){
      // Left pointer at 0 and right pointer at the last index
      int i = 0;
