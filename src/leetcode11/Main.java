@@ -1,4 +1,4 @@
-package mostWater;
+package leetcode11;
 
 import java.util.Arrays;
 

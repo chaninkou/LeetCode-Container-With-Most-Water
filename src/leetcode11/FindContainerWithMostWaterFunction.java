@@ -1,4 +1,4 @@
-package mostWater;
+package leetcode11;
 
 public class FindContainerWithMostWaterFunction {
     // O(n^2) solution, brute force, can do better
