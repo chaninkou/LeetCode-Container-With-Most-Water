@@ -1,20 +1,20 @@
 package leetcode11;
 
 public class FindContainerWithMostWaterFunction {
-    // O(n^2) solution, brute force, can do better
-  public int maxAreaBrute(int[] height) {
-      int max = Integer.MIN_VALUE;
-      
-      for(int i = 0; i < height.length; i++){
-          for(int j = i + 1; j < height.length; j++){
-        	  
-              int min = Math.min(height[i], height[j]);  
-              max = Math.max(max, min * (j - i));
-          }
-      }
-      return max;
-  }
-         
+	// O(n^2) solution, brute force, can do better
+	public int maxAreaBrute(int[] height) {
+		int max = Integer.MIN_VALUE;
+
+		for (int i = 0; i < height.length; i++) {
+			for (int j = i + 1; j < height.length; j++) {
+
+				int min = Math.min(height[i], height[j]);
+				max = Math.max(max, min * (j - i));
+			}
+		}
+		return max;
+	}
+
 	// O(n) solution, using two pointers from left and right
 	// O(n) because no matter what, we are decreasing i and j which is total of
 	// n
@@ -44,28 +44,28 @@ public class FindContainerWithMostWaterFunction {
 
 		return max;
 	}
-	
-	public int maxArea1(int[] height){
+
+	public int maxArea1(int[] height) {
 		int left = 0;
-		
+
 		int right = height.length - 1;
-		
+
 		int max = Integer.MIN_VALUE;
-		
+
 		// Two pointers
-		while(left < right){
+		while (left < right) {
 			// Only get the sum water of the min
-			if(height[left] < height[right]){
+			if (height[left] < height[right]) {
 				max = Math.max(max, height[left] * (right - left));
-				
+
 				left++;
 			} else {
 				max = Math.max(max, height[right] * (right - left));
-				
+
 				right--;
 			}
 		}
-		
+
 		return max;
 	}
 }
