@@ -19,26 +19,25 @@ public class FindContainerWithMostWaterFunction {
 	// O(n) because no matter what, we are decreasing i and j which is total of
 	// n
 	public int maxArea(int[] height) {
-		// Left pointer at 0 and right pointer at the last index
-		int i = 0;
-		int j = height.length - 1;
+		int left = 0;
+		int right = height.length - 1;
 
 		// Setting the max number with the smallest number first
 		int max = Integer.MIN_VALUE;
 
 		// Left pointer and right pointer until both pointer at the same index
-		while (i < j) {
+		while (left < right) {
 			// Since the containter can only contain the smaller height
-			int min = Math.min(height[i], height[j]);
+			int min = Math.min(height[left], height[right]);
 
 			// j - i because to get the distance they are apart from
-			max = Math.max(max, min * (j - i));
+			max = Math.max(max, min * (right - left));
 
 			// Move the smaller height pointer inward
-			if (height[i] < height[j]) {
-				i++;
+			if (height[left] < height[right]) {
+				left++;
 			} else { // when height[i] > height[j]
-				j--;
+				right--;
 			}
 		}
 
